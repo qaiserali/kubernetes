@@ -1,5 +1,5 @@
 ### Run Wordpress and MySQL on kubernetes cluster
-This directory contains an example of how to run a Wordpress and MySQL database on a kubernetes cluster.Both Wordpress and MySQL applications use PersistentVolumes and PersistentVolumeClaims to store data on your host machine. Kubernetes secret is used for storing sensitive data such as root and db passwords etc.
+This directory contains an example of how to run a Wordpress and MySQL database on a kubernetes cluster.Both Wordpress and MySQL applications use PersistentVolumes and PersistentVolumeClaims for storing  data on your host machine. Kubernetes secret contains sensitive data such as root and db passwords etc.
 
 #### Kubernetes Secret object
 A secret is an object for storing sensitive data such as MySQL user or database password. You can put all the secrets in the secret manifest file with base64 encoded format.
