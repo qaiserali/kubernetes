@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: wordpress
-  name: wordpress-pv-claim
+  name: wordpress-pvc
   labels:
     app: wordpress
 spec:
@@ -15,7 +15,7 @@ spec:
       storage: 1Gi
 
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   namespace: wordpress
@@ -23,42 +23,26 @@ metadata:
   labels:
     app: wordpress
 spec:
-  selector:
-    matchLabels:
-      app: wordpress
-      tier: frontend
-  strategy:
-    type: Recreate
+  replicas: 1
   template:
     metadata:
       labels:
         app: wordpress
-        tier: frontend
     spec:
       containers:
-      - image: wordpress:4.8-apache
+      - image: wordpress:4-php7.0
         name: wordpress
         env:
-        - name: WORDPRESS_HOST
-          value: wordpress-mysql
-        - name: WORDPRESS_DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: wordpress-secrets 
-              key: db-name
-        - name: WORDPRESS_DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: wordpress-secrets
-              key: db-username
-        - name: WORDPRESS_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: wordpress-secrets
-              key: db-password
+          - name: WORDPRESS_DB_HOST
+            value: wordpress-mysql
+          - name: WORDPRESS_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wordpress-secrets
+                key: db-password
         ports:
         - containerPort: 80
-          name: wordpress
+          name: http-port
         volumeMounts:
         - name: wordpress-content-storage
           mountPath: /var/www/html
@@ -66,4 +50,3 @@ spec:
       - name: wordpress-content-storage
         persistentVolumeClaim:
           claimName: wordpress-pvc  
-
