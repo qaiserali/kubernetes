@@ -6,3 +6,5 @@ List of kubectl commands for managing kubernetes cluster
 - [Services] (#services)
 - [Nodes] (#nodes)
 - [Troubleshootings] (#troubleshootings)
+
+### Pods
