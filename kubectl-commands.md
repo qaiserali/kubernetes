@@ -21,5 +21,5 @@ Kubectl commands related to pods
  ``$ kubectl get nodes``  Returns list of all nodes  
  ``$ kubectl get node {node-name} --show-labels``  Show all labels for given node  
  ``$ kubectl describe node {node-name}``  Describe node with verbose output  
-``$ kubectl label node {node-name}  labelKey=value``  Assign label to a node
+``$ kubectl label node {node-name}  labelKey=value``  Assign label to a node  
 ``$ kubectl label node {node-name} labelKey=value --overwrite``   Overwrite a node label
