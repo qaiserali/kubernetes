@@ -52,7 +52,7 @@ List of kubectl commands for managing kubernetes cluster
 
 ``$ kubectl -n {namespace} get quota``                                   Quota usage within a namespace  
 ``$ kubectl -n {namespace} describe quota {quota-name}``                 Describe a resource quota   
-``$ kubectl -n {namespace} get limits``                                  Returns list of current limits
+``$ kubectl -n {namespace} get limits``                                  Returns list of current limits  
 ``$ kubectl -n {namespace} describe limits {limit-name}``                Show resources requests and max limits
 
   
