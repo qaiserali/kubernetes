@@ -32,8 +32,8 @@ List of kubectl commands for managing kubernetes cluster
 
 ``$ kubectl taint nodes {node-name} key=value:NoSchedule``    No pod will be schedule on a given node, unless it has a matching toleration  
 ``$ kubectl taint nodes {node-name} key=value:NoExecute``   Any pod that don't tolerate the given taint will be evicated immediately   
-``$ kubectl taint nodes {node-name} key:NoSchedule-``         Delete taint with type NoSchedule and key=key. The minus(-) sign in the end is used to delete a taint. 
-``$ kubectl taint nodes {node-name} key2:NoExecute-``         Delete taint with type NoExecute and key=key2
+``$ kubectl taint nodes {node-name} key:NoSchedule-``         Delete taint with type NoSchedule and key=key. The minus(-) sign in the end is used to delete a taint   
+``$ kubectl taint nodes {node-name} key2:NoExecute-``         Delete taint with type NoExecute and key=key2  
   
 ### Nodes
  
