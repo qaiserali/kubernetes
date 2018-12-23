@@ -41,8 +41,8 @@ List of kubectl commands for managing kubernetes cluster
 ``$ kubectl create namespace {my-namespace}``                                   Create a namespace  
 ``$ kubctl get namespaces``                                                     List all namespaces  
 ``$ kubectl get ns``                                                            ns can be used instead of namespace  
-``$ export CONTEXT=$(kubectl config view | awk '/current-context/{print $2}')  
-  $ kubectl config set-context $CONTEXT --namespace={my-namespace}``            Set a default namespace to launch resources in   
+``$ export CONTEXT=$(kubectl config view | awk '/current-context/{print $2}')``
+ `` $ kubectl config set-context $CONTEXT --namespace={my-namespace}``            Set a default namespace to launch resources in   
   
 ### Nodes
  
