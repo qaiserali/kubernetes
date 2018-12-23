@@ -13,6 +13,7 @@ Kubectl commands related to pods
 ``$ kubectl get pods``   Returns list all pods  
 `` $ kubectl -n {namespace} get pods``  Returns list of all pods in given namespace  
  `` $ kubectl get pods --all-namespaces ``  Returns list of all pods in all namespaces  
+ ``$ kubectl describe pod {pod-name}`` Describe pod with verbose output
   
 ### Nodes
  
