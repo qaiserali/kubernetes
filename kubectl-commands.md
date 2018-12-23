@@ -8,6 +8,7 @@ List of kubectl commands for managing kubernetes cluster
 - [Nodes](#nodes)
 - [Taints and Tolerations](#taints-and-tolerations)
 - [Namespaces](#namespaces)
+- [ResourceQuotas](#resource-quotas)
 - [Troubleshootings](#troubleshootings)
 
 ### Pods
@@ -18,11 +19,13 @@ List of kubectl commands for managing kubernetes cluster
 ``$ kubectl get pods --all-namespaces ``    List of all pods in all namespaces  
 ``$ kubectl describe pod {pod-name}``       Describe pod with verbose output  
 ``$ watch kubectl pods``                    Pods status during execution  
-``$ kubectl delete pod {pod-name}``         Delete a pod
+``$ kubectl delete pod {pod-name}``         Delete a pod  
+``$ kubectl get rs``		 	    Get replicas set 
   
 ### Deployments
 
 ``$ kubectl get deployments``                                 Returns deployments list  
+``$ kubectl get deploy`` 			              Deployment list. deploy shortcut can be used instead of deployment  
 ``$ kubectl -n {namespace} get deployments``                  Deployments list within a namespace  
 ``$ kubectl scale deployment {deployment-name} --replicas=5`` Scale deployment and set pods replicas to 5  
 ``$ kubectl delete deployment {deployment-name}``             Delete a deployment  
@@ -38,11 +41,20 @@ List of kubectl commands for managing kubernetes cluster
 
 ### Namespaces
 
-``$ kubectl create namespace {my-namespace}``                                   Create a namespace  
-``$ kubctl get namespaces``                                                     List all namespaces  
-``$ kubectl get ns``                                                            ns can be used instead of namespace  
+``$ kubectl create namespace {my-namespace}``                                     Create a namespace  
+``$ kubctl get namespaces``                                                       List all namespaces  
+``$ kubectl get ns``                                                              ns can be used instead of namespace  
 ``$ export CONTEXT=$(kubectl config view | awk '/current-context/{print $2}')``  
  `` $ kubectl config set-context $CONTEXT --namespace={my-namespace}``            Set a default namespace to launch resources in   
+
+
+### Resource Quotas
+
+``$ kubectl -n {namespace} get quota``                                   Quota usage within a namespace  
+``$ kubectl -n {namespace} describe quota {quota-name}``                 Describe a resource quota   
+``$ kubectl -n {namespace} get limits``                                  Returns list of current limits
+``$ kubectl -n {namespace} describe limits {limit-name}``                Show resources requests and max limits
+
   
 ### Nodes
  
