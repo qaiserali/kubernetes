@@ -7,6 +7,7 @@ List of kubectl commands for managing kubernetes cluster
 - [Deployments](#deployments)
 - [Nodes](#nodes)
 - [Taints and Tolerations](#taints-and-tolerations)
+- [Namespaces](#namespaces)
 - [Troubleshootings](#troubleshootings)
 
 ### Pods
@@ -31,9 +32,17 @@ List of kubectl commands for managing kubernetes cluster
 ### Taints and Tolerations
 
 ``$ kubectl taint nodes {node-name} key=value:NoSchedule``    No pod will be schedule on a given node, unless it has a matching toleration  
-``$ kubectl taint nodes {node-name} key=value:NoExecute``   Any pod that don't tolerate the given taint will be evicated immediately   
+``$ kubectl taint nodes {node-name} key=value:NoExecute``     Any pod that don't tolerate the given taint will be evicated immediately   
 ``$ kubectl taint nodes {node-name} key:NoSchedule-``         Delete taint with type NoSchedule and key=key. The minus(-) sign in the end is used to delete a taint   
 ``$ kubectl taint nodes {node-name} key2:NoExecute-``         Delete taint with type NoExecute and key=key2  
+
+### Namespaces
+
+``$ kubectl create namespace {my-namespace}``                                   Create a namespace  
+``$ kubctl get namespaces``                                                     List all namespaces  
+``$ kubectl get ns``                                                            ns can be used instead of namespace  
+``$ export CONTEXT=$(kubectl config view | awk '/current-context/{print $2}')  
+  $ kubectl config set-context $CONTEXT --namespace={my-namespace}``            Set a default namespace to launch resources in   
   
 ### Nodes
  
