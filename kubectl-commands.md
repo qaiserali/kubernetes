@@ -6,7 +6,7 @@ List of kubectl commands for managing kubernetes cluster
 - [Services](#services)
 - [Deployments](#deployments)
 - [Nodes](#nodes)
-- [Taints and Tolerations](#taints_and_tolerations)
+- [Taints and Tolerations](#taints-and-tolerations)
 - [Troubleshootings](#troubleshootings)
 
 ### Pods
