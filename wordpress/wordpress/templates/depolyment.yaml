@@ -1,0 +1,81 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicas }}
+  strategy:
+    type: rollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: "app"
+                      operator: In
+                      values:
+                        - {{ .Chart.Name }}
+                topologyKey: "kubernetes.io/hostname"
+      volumes:
+        - name: {{ .Chart.Name }}
+          hostPath:
+            path: /data/html
+      initContainers:
+        - name: set-permissions
+          images: busybox
+          command: ["sh", "c", "chown -R 472:472 /data"] 
+          volumeMounts:
+            - name: {{ .Chart.Name }}-data
+              mountPath: /var/www/html
+      containers:
+        - name:  {{ .Chart.Name }}
+          image:  {{ .Values.image.repository }}/ {{ .Values.image.tag }}
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.ports.port }}
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.ports.port }}
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          env:
+            - name: WORDPRESS_DB_HOST
+              values: mysql
+            - name: WORDPRESS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-secrets
+                  key: dbPassword
+          ports:
+          - containerPort: {{ .Values.ports.port }}
+            name: {{ .Values.ports.name }}
+            targetPort: {{ .Values.ports.targetPort }}
+          volumeMounts:
+          - name: {{ .Chart.Name }}-data
+            mountPath: /var/www/html
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Chart.Name }}-data
+      spec:
+        accessMode: ["ReadWriteOnce"]
+        storageClassName: "default"
+        resources:
+          requests:
+            storage: 500Mi

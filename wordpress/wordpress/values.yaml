@@ -1,0 +1,17 @@
+---
+replicas: "3"
+namespace: "wordpress"
+image:
+  repository: "wordpress"
+  tag: "4-php7.0"
+resources:
+  requests: 
+    cpu: "150m"
+    memory: "64Mi"
+  limits:
+    cpu: "500m"
+    memory: "128Mi"
+ports:
+  port: 80
+  targetPort: 80
+  name: http
