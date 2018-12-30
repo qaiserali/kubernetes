@@ -9,7 +9,7 @@ metadata:
 spec:
   replicas: {{ .Values.replicas }}
   strategy:
-    type: rollingUpdate
+    type: RollingUpdate
     rollingUpdate:
       maxSurge: 2
       maxUnavailable: 1
@@ -31,19 +31,19 @@ spec:
                         - {{ .Chart.Name }}
                 topologyKey: "kubernetes.io/hostname"
       volumes:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-data
           hostPath:
             path: /data/html
-      initContainers:
-        - name: set-permissions
-          images: busybox
-          command: ["sh", "c", "chown -R 472:472 /data"] 
-          volumeMounts:
-            - name: {{ .Chart.Name }}-data
-              mountPath: /var/www/html
+#      initContainers:
+#        - name: set-permissions
+#          image: busybox
+#          command: ["sh", "c", "chown -R 472:472 /data/html"] 
+#          volumeMounts:
+#            - name: {{ .Chart.Name }}-data
+#              mountPath: /var/www/html
       containers:
         - name:  {{ .Chart.Name }}
-          image:  {{ .Values.image.repository }}/ {{ .Values.image.tag }}
+          image:  {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: IfNotPresent
           livenessProbe:
             tcpSocket:
